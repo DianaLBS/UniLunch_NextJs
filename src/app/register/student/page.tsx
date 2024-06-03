@@ -3,14 +3,15 @@ import React, { useState } from "react";
 import { signIn } from "next-auth/react";
 import { useRouter } from "next/navigation";
 
-const RegisterRestaurantPage = () => {
+const RegisterStudentPage = () => {
   const [errors, setErrors] = useState<string[]>([]);
-  const [name, setName] = useState<string>("test");
-  const [email, setEmail] = useState<string>("test@test.com");
-  const [password, setPassword] = useState<string>("123123");
-  const [nit, setNit] = useState<string>("1111111111");
-  const [manager, setManager] = useState<string>("Gloria");
-  const [phone, setPhone] = useState<string>("123456789");
+  const [name, setName] = useState<string>("");
+  const [lastname, setLastName] = useState<string>("");
+  const [email, setEmail] = useState<string>("");
+  const [password, setPassword] = useState<string>("");
+  const [dni, setDni] = useState<string>("");
+  const [code, setCode] = useState<string>("");
+  const [program, setprogram] = useState<string>("");
   const router = useRouter();
 
   const handleSubmit = async (event: React.FormEvent<HTMLFormElement>) => {
@@ -27,11 +28,12 @@ const RegisterRestaurantPage = () => {
           },
           body: JSON.stringify({
             name,
+            lastname,
             email,
             password,
-            nit,
-            manager,
-            phone,
+            dni,
+            code,
+            program,
           }),
         }
       );
@@ -62,7 +64,7 @@ const RegisterRestaurantPage = () => {
 
   return (
     <div>
-      <h1>Register Restaurant</h1>
+      <h1>Register Student</h1>
       <form onSubmit={handleSubmit}>
         <input
           type="text"
@@ -71,6 +73,14 @@ const RegisterRestaurantPage = () => {
           className="form-control mb-2"
           value={name}
           onChange={(event) => setName(event.target.value)}
+        />
+        <input
+          type="text"
+          placeholder="Last Name"
+          name="lastName"
+          className="form-control mb-2"
+          value={lastname}
+          onChange={(event) => setLastName(event.target.value)}
         />
         <input
           type="email"
@@ -90,27 +100,27 @@ const RegisterRestaurantPage = () => {
         />
         <input
           type="text"
-          placeholder="NIT"
-          name="nit"
+          placeholder="DNI"
+          name="dni"
           className="form-control mb-2"
-          value={nit}
-          onChange={(event) => setNit(event.target.value)}
+          value={dni}
+          onChange={(event) => setDni(event.target.value)}
         />
         <input
           type="text"
-          placeholder="Manager"
-          name="manager"
+          placeholder="Code"
+          name="code"
           className="form-control mb-2"
-          value={manager}
-          onChange={(event) => setManager(event.target.value)}
+          value={code}
+          onChange={(event) => setCode(event.target.value)}
         />
         <input
           type="text"
-          placeholder="Phone"
-          name="phone"
+          placeholder="Program"
+          name="program"
           className="form-control mb-2"
-          value={phone}
-          onChange={(event) => setPhone(event.target.value)}
+          value={program}
+          onChange={(event) => setprogram(event.target.value)}
         />
         <button
           type="submit"
@@ -133,4 +143,4 @@ const RegisterRestaurantPage = () => {
   );
 };
 
-export default RegisterRestaurantPage;
+export default RegisterStudentPage;

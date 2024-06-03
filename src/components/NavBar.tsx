@@ -39,10 +39,16 @@ const Navbar = () => {
               Login
             </Link>
             <Link
-              href="/register"
+              href="/register/restaurant"
               className="btn btn-primary btn-sm"
             >
-              Register
+              Register as Restaurant
+            </Link>
+            <Link
+              href="/register/student"
+              className="btn btn-primary btn-sm"
+            >
+              Register as Student
             </Link>
           </>
         )}
