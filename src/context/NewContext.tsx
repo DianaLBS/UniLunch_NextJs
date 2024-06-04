@@ -29,12 +29,44 @@ const reducer = (state: State, action: Action): State => {
         case "SET_NEWS":
             return { ...state, news: action.payload };
         case "ADD_NEW":
-
+            return { ...state, news: [...state.news, action.payload] };
         case "UPDATE_NEW":
-
+            return {
+                ...state,
+                news: state.news.map(news =>
+                    news.id === action.payload.id ? action.payload : news
+                ),
+            };
         case "DELETE_NEW":
-
+            return {
+                ...state,
+                news: state.news.filter(news => news.id !== action.payload),
+            };
         default:
             return state;
     }
+};
+
+const NewContext = createContext<{
+    state: State;
+    dispatch: React.Dispatch<Action>;
+}>({
+    state: initialState,
+    dispatch: () => undefined,
+});
+
+export const useNews = () => useContext(NewContext);
+
+const NewProvider = ({ children }:{children: ReactNode}) => {
+    const [state, dispatch] = useReducer(reducer, initialState);
+
+    useEffect( () =>{
+        const fetchNews = async () => {
+            const response = await fetch(`${process.env.NEXTAUTH_URL}/news`);
+            const data = await response.json();
+            dispatch({ type: "SET_NEWS", payload: data });
+        };
+        fetchNews();
+
+    },[]);
 }
