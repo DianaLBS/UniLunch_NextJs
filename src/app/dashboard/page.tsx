@@ -1,35 +1,49 @@
-"use client";
-import { useSession } from "next-auth/react";
+"use client"
 import React from "react";
+import { useSession } from "next-auth/react";
+import ProductList from '../../components/ProductList'; // Ajusta la ruta según la estructura real de tu proyecto
+import ProductForm from "../../components/ProductForm"; // Formulario para agregar o editar productos
 
 const Dashboard = () => {
   const { data: session, status } = useSession();
 
   if (status === "loading") {
-    return <p>Evaluando si ya estás usando nuestro sistema ;)...</p>;
+    return <p>Cargando...</p>;
   }
-  console.log(session?.user?.token);
 
-/*const getRestaurants = async () => {
-    const res = await fetch(`${process.env.NEXT_PUBLIC_BACKEND_URL}/users`, {
-      method: "GET",
-      headers: {
-        "Content-Type": "application/json",
-        Authorization: `Bearer ${session?.user?.token}`,
-      },
-    });
-    const data = await res.json();
-    console.log(data);
-  };*/
+  if (!session) {
+    return (
+      <div>
+        <h1>No estás autenticado</h1>
+        <p>Por favor, inicia sesión para acceder a esta página.</p>
+      </div>
+    );
+  }
+
+  const userRole = session.user.role; // Asumiendo que el rol del usuario está en la sesión
+
+  // Función para manejar la creación o edición de productos (sólo para restaurantes)
+  const handleProductSubmit = (productData) => {
+    console.log("Producto a procesar:", productData);
+    // Aquí deberías añadir la lógica para enviar estos datos al backend
+  };
 
   return (
     <div>
       <h1>Dashboard</h1>
-
-      <pre>
-        <code>{JSON.stringify(session, null, 2)}</code>
-      </pre>
+      {/* Renderizar contenido basado en el rol del usuario */}
+      {userRole === 'restaurant' ? (
+        <>
+          <ProductForm onSubmit={handleProductSubmit} />
+          <ProductList />
+        </>
+      ) : userRole === 'student' ? (
+        <ProductList />
+      ) : (
+        <p>No tienes permisos para ver esta página.</p>
+      )}
     </div>
   );
 };
+
 export default Dashboard;
