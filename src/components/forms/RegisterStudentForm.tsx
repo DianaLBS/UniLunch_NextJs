@@ -146,7 +146,7 @@ const RegisterStudentPage = () => {
               </div>
               <div className="mb-3">
                 <label htmlFor="dni" className="block text-sm font-medium text-gray-700">
-                  DNI
+                  Documento de identidad
                 </label>
                 <input
                   type="text"

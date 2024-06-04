@@ -1,7 +1,7 @@
 "use client"
 import React from "react";
 import { useSession } from "next-auth/react";
-import ProductList from '../../components/ProductList'; // Ajusta la ruta según la estructura real de tu proyecto
+import ProductList from '../../components/products/ProductList'; // Ajusta la ruta según la estructura real de tu proyecto
 import ProductForm from "../../components/ProductForm"; // Formulario para agregar o editar productos
 
 const Dashboard = () => {
