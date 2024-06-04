@@ -1,3 +1,4 @@
+// route.ts
 import NextAuth from "next-auth";
 import CredentialsProvider from "next-auth/providers/credentials";
 
@@ -10,18 +11,6 @@ const handler = NextAuth({
         password: { label: "Password", type: "password" },
       },
       async authorize(credentials) {
-        // Validar contraseña
-        const password = credentials?.password || '';
-        const isValidPassword = password.length >= 6 &&
-          /[A-Z]/.test(password) &&
-          /[a-z]/.test(password) &&
-          /\d/.test(password);
-
-        if (!isValidPassword) {
-          throw new Error('The password must have an Uppercase, lowercase letter and a number, password must be longer than or equal to 6 characters');
-        }
-
-        // Realizar la solicitud al backend
         const res = await fetch(`${process.env.NEXT_PUBLIC_BACKEND_URL}/auth/login`, {
           method: "POST",
           body: JSON.stringify({
@@ -34,16 +23,25 @@ const handler = NextAuth({
 
         if (user.error) throw user;
 
-        return user;
+        return { ...user, role: user.role }; // Asegúrate de que el rol está incluido
       },
     }),
   ],
   callbacks: {
     async jwt({ token, user }) {
-      return { ...token, ...user };
+      if (user) {
+        token.role = user.role;
+        token.token = user.token;
+        token.email = user.email;
+      }
+      return token;
     },
     async session({ session, token }) {
-      session.user = token as any;
+      if (token) {
+        session.user.role = token.role as string;
+        session.user.token = token.token as string;
+        session.user.email = token.email as string;
+      }
       return session;
     },
   },

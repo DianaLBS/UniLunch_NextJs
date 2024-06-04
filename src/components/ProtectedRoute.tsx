@@ -1,19 +1,29 @@
-import { useSession, signIn } from "next-auth/react";
-import React from "react";
-import { useEffect } from "react";
+// components/ProtectedRoute.tsx
+import { useSession } from "next-auth/react";
+import { useRouter } from "next/router";
+import React, { useEffect } from "react";
+import { useAuth } from "../context/SessionAuthProvider";
 
-export default function ProtectedRoute({ children }) {
+const ProtectedRoute = ({ children, roles }: { children: React.ReactNode, roles: any }) => {
   const { data: session, status } = useSession();
+  const { state } = useAuth();
+  const router = useRouter();
 
   useEffect(() => {
-    if (status === "unauthenticated") {
-      signIn();
-    }
-  }, [status]);
+    if (status === "loading") return;
+    if (!session) router.push("/login");
 
-  if (status === "loading") {
+    const userRole = session?.user?.role || state.role;
+    if (roles && !roles.includes(userRole)) {
+      router.push("/unauthorized");
+    }
+  }, [session, status, router, state.role]);
+
+  if (status === "loading" || !session) {
     return <div>Loading...</div>;
   }
 
   return children;
-}
+};
+
+export default ProtectedRoute;
