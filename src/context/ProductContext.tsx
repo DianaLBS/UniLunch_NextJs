@@ -65,7 +65,7 @@ const ProductProvider = ({ children }: { children: ReactNode }) => {
   useEffect(() => {
     // Fetch products from API
     const fetchProducts = async () => {
-      const response = await fetch("${process.env.NEXT_PUBLIC_BACKEND_URL}/products");
+      const response = await fetch(`${process.env.NEXT_PUBLIC_BACKEND_URL}/products`);
       const data = await response.json();
       dispatch({ type: "SET_PRODUCTS", payload: data });
     };
