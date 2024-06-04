@@ -4,9 +4,9 @@ import React, { useEffect } from "react";
 import { useForm } from "react-hook-form";
 import { yupResolver } from "@hookform/resolvers/yup";
 import * as Yup from "yup";
-import { useAuth } from "../context/SessionAuthProvider";
+import { useAuth } from "../context/SessionAuthProvider"; // Ajusta la ruta según tu proyecto
 import { useProducts } from "../context/ProductContext";
-import { useRouter } from "next/router";
+import { useRouter } from "next/navigation";
 
 const validationSchema = Yup.object().shape({
   name: Yup.string().required("Name is required"),
@@ -33,17 +33,17 @@ const UpdateProductForm = ({ productId }: { productId: string }) => {
   });
   const router = useRouter();
 
-useEffect(() => {
+  useEffect(() => {
     // Cargar los datos del producto en el formulario
     const product = products.find(p => p.id === Number(productId));
     if (product) {
-        setValue("name", product.name);
-        setValue("description", product.description);
-        setValue("price", product.price);
-        setValue("stock", product.stock);
-        setValue("image", product.image);
+      setValue("name", product.name);
+      setValue("description", product.description);
+      setValue("price", product.price);
+      setValue("stock", product.stock);
+      setValue("image", product.image);
     }
-}, [productId, products, setValue]);
+  }, [productId, products, setValue]);
 
   const onSubmit = async (data: any) => {
     const response = await fetch(`${process.env.NEXT_PUBLIC_BACKEND_URL}/products/${productId}`, {
