@@ -14,9 +14,7 @@ const Navbar = () => {
           <span className="text-white font-bold text-xl flex items-center">
             <FaUtensils className="mr-2" /> UniLunch
           </span>
-          <Link href="/" className="text-white font-medium hover:text-blue-400 no-underline flex items-center">
-            <FaHome className="mr-1" /> Inicio
-          </Link>
+          
           {session?.user && (
             <Link href="/dashboard" className="text-white font-medium hover:text-blue-400 no-underline flex items-center">
               <FaTachometerAlt className="mr-1" /> Panel

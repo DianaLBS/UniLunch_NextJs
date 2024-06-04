@@ -6,7 +6,7 @@ const Dashboard = () => {
   const { data: session, status } = useSession();
 
   if (status === "loading") {
-    return <p>Loading...</p>;
+    return <p>Evaluando si ya estás usando nuestro sistema ;)...</p>;
   }
   console.log(session?.user?.token);
 
