@@ -34,7 +34,7 @@ const AddNewForm = () => {
             headers: {
                 "Content-Type": "application/json",
                 "Authorization": `Bearer ${authState.token}`,
-        },
+            },
             body: JSON.stringify(data),
         });
 
