@@ -7,8 +7,6 @@ export interface New{
     title: string;
     description: string;
     image: string;
-
-
 }
 interface State  {
     news: New[];
@@ -62,11 +60,20 @@ const NewProvider = ({ children }:{children: ReactNode}) => {
 
     useEffect( () =>{
         const fetchNews = async () => {
-            const response = await fetch(`${process.env.NEXTAUTH_URL}/news`);
+            const response = await fetch(`${process.env.NEXT_PUBLIC_BACKEND_URL}/news`);
             const data = await response.json();
             dispatch({ type: "SET_NEWS", payload: data });
         };
         fetchNews();
 
     },[]);
-}
+
+    return (
+
+        <NewContext.Provider value={{ state, dispatch }}>
+            {children}
+        </NewContext.Provider>
+    );
+};
+
+export default NewProvider;
