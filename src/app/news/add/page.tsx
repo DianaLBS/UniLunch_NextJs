@@ -15,6 +15,17 @@ const AddNewPage = () => {
     image: string;
   }) => {
     setError("");
+    setError("");
+
+    if (!authState.token) {
+      setError("You need to be logged in to add a new.");
+      return;
+    }
+
+    if (!authState.role || authState.role !== "restaurant") {
+      setError("You must be a restaurant to add a new.");
+      return;
+    }
 
     try {
       const response = await fetch(`${process.env.NEXT_PUBLIC_BACKEND_URL}/news`, {
@@ -36,6 +47,15 @@ const AddNewPage = () => {
       setError(err instanceof Error ? err.message : String(err));
     }
   };
+
+  // Si no hay token o el usuario no es restaurante, mostrar el mensaje de error en lugar del formulario
+  if (!authState.token) {
+    return <p>You need to be logged in to add a new.</p>;
+  }
+
+  if (!authState.role || authState.role !== "restaurant") {
+    return <p>You must be a restaurant to add a new.</p>;
+  }
 
   //Cambiar por otro tipo de formulario. 
   return (
