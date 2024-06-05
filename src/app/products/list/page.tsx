@@ -8,11 +8,7 @@ import CartList from "../../../components/cart/CartList";  // Importamos el comp
 
 const ProductsListPage = () => {
   return (
-    <ProductProvider>
-      <CartProvider>
-        <ProductsPage />
-      </CartProvider>
-    </ProductProvider>
+      <ProductsPage />
   );
 };
 

@@ -2,7 +2,7 @@
 
 import React, { useEffect, useState } from "react";
 import { useAuth } from "../../../context/SessionAuthProvider";
-import NewItem from "../../../components/NewItem";
+import NewItem from "../../../components/News/NewItem";
 import { useNews } from "../../../context/NewContext";
 
 const NewsPage = () => {

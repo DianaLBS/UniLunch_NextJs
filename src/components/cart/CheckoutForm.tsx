@@ -1,5 +1,5 @@
 "use client";
-import React from "react";
+import React, { useEffect } from "react";
 import { useCart } from "../../context/CartContext";
 import { useAuth } from "../../context/SessionAuthProvider";
 import { useRouter } from "next/navigation";
@@ -8,6 +8,10 @@ const CheckoutForm: React.FC = () => {
   const { state: cartState, dispatch: cartDispatch } = useCart();
   const { state: authState } = useAuth();
   const router = useRouter();
+
+  useEffect(() => {
+    console.log("Cart state at checkout:", cartState);
+  }, [cartState]);
 
   const handleCheckout = async () => {
     if (cartState.cartItems.length === 0) {
