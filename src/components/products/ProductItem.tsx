@@ -41,8 +41,16 @@ const ProductItem: React.FC<ProductItemProps> = ({ product, onAddToCart }) => {
       <h2>{product.name}</h2>
       <p>{product.description}</p>
       <p>${product.price}</p>
+      {authState.role === "student" && (
+        <>
       <p>Stock: {product.stock}</p>
+      </>
+      )}
+      {authState.role === "student" && (
+        <>
       <button onClick={handleAddToCart}>Add to Cart</button>
+      </>
+      )}
       {authState.role === "restaurant" && (
         <>
           <Link href={`/products/edit/${product.id}`} passHref>
