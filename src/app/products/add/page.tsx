@@ -2,7 +2,7 @@
 
 import React, { useState } from "react";
 import { useRouter } from "next/navigation";
-import ProductForm from "../../../components/ProductForm";
+import ProductForm from "../../../components/products/ProductForm";
 import { useAuth } from "../../../context/SessionAuthProvider";
 
 const AddProductPage = () => {
