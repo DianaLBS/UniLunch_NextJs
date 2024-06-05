@@ -5,8 +5,7 @@ import Image from 'next/image';
 import { AiFillHome, AiFillShopping, AiFillFileText, AiFillTags, AiFillSetting, AiOutlineMenu, AiOutlineClose, AiFillCaretDown, AiFillCaretUp } from 'react-icons/ai';
 import uniLunchLogo from "/public/UniLunchLogo.png";
 
-const Sidebar = ({ role }: { role: string }) => {
-  const [isOpen, setIsOpen] = useState(true);
+const Sidebar = ({ role, isOpen, onToggle }: { role: string; isOpen: boolean; onToggle: () => void; }) => {
   const [openSubMenus, setOpenSubMenus] = useState<{ [key: string]: boolean }>({});
 
   const toggleSubMenu = (label: string) => {
@@ -41,29 +40,26 @@ const Sidebar = ({ role }: { role: string }) => {
     { href: '/products', label: 'Productos', icon: <AiFillShopping />, subLinks: [
       { href: '/products/list', label: 'Ver Productos' },
       { href: '/products/add', label: 'Crear Producto' }
-    ]},
-    { href: '/announcements', label: 'Novedades', icon: <AiFillTags />, subLinks: [
-      { href: '/announcements/add', label: 'Crear Novedad' }
     ]}
   ];
 
   const links = role === 'student' ? studentLinks : restaurantLinks;
 
   return (
-    <div className={`bg-gray-900 text-white h-full flex flex-col ${isOpen ? 'w-64' : 'w-20'} transition-width duration-300 rounded-tr-lg rounded-br-lg`}>
+    <div className={`bg-gray-900 text-white h-screen flex flex-col ${isOpen ? 'w-64' : 'w-20'} transition-width duration-300 fixed`}>
       <div className="flex items-center justify-between p-4">
         {isOpen && <h1 className="text-xl font-bold">UniLunch</h1>}
-        <button onClick={() => setIsOpen(!isOpen)} className="focus:outline-none">
+        <button onClick={onToggle} className="focus:outline-none">
           {isOpen ? <AiOutlineClose /> : <AiOutlineMenu />}
         </button>
       </div>
       <div className="flex items-center justify-center mb-4">
         <Image src={uniLunchLogo} alt="Logo UniLunch" width={isOpen ? 200 : 60} height={isOpen ? 200 : 60} className="transition-all duration-300" />
       </div>
-      <div className="flex-1 flex flex-col">
+      <div className="flex-1 flex flex-col overflow-y-auto">
         {links.map((link) => (
           <div key={link.href}>
-            <div className="flex justify-between items-center text-white p-4 flex items-center hover:bg-gray-700 no-underline cursor-pointer" onClick={() => toggleSubMenu(link.label)}>
+            <div className="flex justify-between items-center text-white p-4 hover:bg-gray-700 cursor-pointer" onClick={() => toggleSubMenu(link.label)}>
               <div className="flex items-center">
                 {link.icon}
                 {isOpen && <span className="ml-2">{link.label}</span>}
@@ -74,7 +70,7 @@ const Sidebar = ({ role }: { role: string }) => {
               <div className="pl-8">
                 {link.subLinks.map((subLink) => (
                   <Link key={subLink.href} href={subLink.href} legacyBehavior>
-                    <a className="text-white p-4 flex items-center hover:bg-gray-700 no-underline">
+                    <a className="text-white p-4 flex items-center hover:bg-gray-700">
                       <span className="ml-2">{subLink.label}</span>
                     </a>
                   </Link>

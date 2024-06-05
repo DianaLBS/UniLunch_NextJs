@@ -21,15 +21,15 @@ const UpdateProductPage = () => {
   }, [authState.token, router]);
 
   if (!authState.token) {
-    return <p>You need to be logged in to update a product.</p>;
+    return <p>Necesitas loguearte</p>;
   }
 
   if (!authState.role || authState.role !== "restaurant") {
-    return <p>You should be a restaurant</p>;
+    return <p>Deberías ser un restaurante</p>;
   }
 
   if (!productId) {
-    return <p>Loading...</p>;
+    return <p>Cargando...</p>;
   }
 
   return (

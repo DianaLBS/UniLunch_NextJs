@@ -1,11 +1,11 @@
 "use client";
-
 import React from "react";
 import { useForm } from "react-hook-form";
 import { yupResolver } from "@hookform/resolvers/yup";
 import * as Yup from "yup";
 import { AiOutlineFileText, AiOutlineDollar, AiOutlineStock, AiOutlinePicture } from 'react-icons/ai';
 
+// Definición del esquema de validación con Yup
 const validationSchema = Yup.object().shape({
   name: Yup.string().required("El nombre es obligatorio"),
   description: Yup.string()
@@ -17,6 +17,7 @@ const validationSchema = Yup.object().shape({
   image: Yup.string().url("URL inválida"),
 });
 
+// Definición de las props del componente ProductForm
 interface ProductFormProps {
   initialData?: {
     name: string;
@@ -35,6 +36,7 @@ interface ProductFormProps {
 }
 
 const ProductForm: React.FC<ProductFormProps> = ({ initialData, onSubmit }) => {
+  // Uso del hook useForm de react-hook-form con yupResolver
   const {
     register,
     handleSubmit,
@@ -45,67 +47,82 @@ const ProductForm: React.FC<ProductFormProps> = ({ initialData, onSubmit }) => {
     defaultValues: initialData,
   });
 
+  // Manejo del envío del formulario
   const handleFormSubmit = (data: any) => {
     onSubmit(data);
     reset();
   };
 
   return (
-    <form onSubmit={handleSubmit(handleFormSubmit)} className="max-w-4xl mx-auto bg-white p-8 shadow-md rounded-lg space-y-6">
-      <h2 className="text-2xl font-bold text-center mb-6">Agregar Producto</h2>
-      <div className="flex items-center space-x-4">
-        <AiOutlineFileText size={24} />
-        <input
-          type="text"
-          placeholder="Nombre"
-          {...register("name")}
-          className="w-full p-2 border border-gray-300 rounded-lg"
-        />
+    <form onSubmit={handleSubmit(handleFormSubmit)} className="space-y-6">
+      <div>
+        <label className="block text-gray-700">Nombre</label>
+        <div className="flex items-center space-x-2">
+          <AiOutlineFileText size={24} />
+          <input
+            type="text"
+            placeholder="Nombre"
+            {...register("name")}
+            className="w-full p-2 border border-gray-300 rounded-lg"
+          />
+        </div>
+        {errors.name && <p className="text-red-500 text-sm">{errors.name.message}</p>}
       </div>
-      {errors.name && <p className="text-red-500 text-sm">{errors.name.message}</p>}
       
-      <div className="flex items-center space-x-4">
-        <AiOutlineFileText size={24} />
-        <textarea
-          placeholder="Descripción"
-          {...register("description")}
-          className="w-full p-2 border border-gray-300 rounded-lg"
-        />
+      <div>
+        <label className="block text-gray-700">Descripción</label>
+        <div className="flex items-center space-x-2">
+          <AiOutlineFileText size={24} />
+          <textarea
+            placeholder="Descripción"
+            {...register("description")}
+            className="w-full p-2 border border-gray-300 rounded-lg"
+          />
+        </div>
+        {errors.description && <p className="text-red-500 text-sm">{errors.description.message}</p>}
       </div>
-      {errors.description && <p className="text-red-500 text-sm">{errors.description.message}</p>}
 
-      <div className="flex items-center space-x-4">
-        <AiOutlineDollar size={24} />
-        <input
-          type="number"
-          placeholder="Precio"
-          {...register("price")}
-          className="w-full p-2 border border-gray-300 rounded-lg"
-        />
+      <div>
+        <label className="block text-gray-700">Precio</label>
+        <div className="flex items-center space-x-2">
+          <AiOutlineDollar size={24} />
+          <input
+            type="number"
+            placeholder="Precio"
+            {...register("price")}
+            className="w-full p-2 border border-gray-300 rounded-lg"
+          />
+        </div>
+        {errors.price && <p className="text-red-500 text-sm">{errors.price.message}</p>}
       </div>
-      {errors.price && <p className="text-red-500 text-sm">{errors.price.message}</p>}
 
-      <div className="flex items-center space-x-4">
-        <AiOutlineStock size={24} />
-        <input
-          type="number"
-          placeholder="Stock"
-          {...register("stock")}
-          className="w-full p-2 border border-gray-300 rounded-lg"
-        />
+      <div>
+        <label className="block text-gray-700">Stock</label>
+        <div className="flex items-center space-x-2">
+          <AiOutlineStock size={24} />
+          <input
+            type="number"
+            placeholder="Stock"
+            {...register("stock")}
+            className="w-full p-2 border border-gray-300 rounded-lg"
+          />
+        </div>
+        {errors.stock && <p className="text-red-500 text-sm">{errors.stock.message}</p>}
       </div>
-      {errors.stock && <p className="text-red-500 text-sm">{errors.stock.message}</p>}
 
-      <div className="flex items-center space-x-4">
-        <AiOutlinePicture size={24} />
-        <input
-          type="text"
-          placeholder="URL de la Imagen"
-          {...register("image")}
-          className="w-full p-2 border border-gray-300 rounded-lg"
-        />
+      <div>
+        <label className="block text-gray-700">URL de la Imagen</label>
+        <div className="flex items-center space-x-2">
+          <AiOutlinePicture size={24} />
+          <input
+            type="text"
+            placeholder="URL de la Imagen"
+            {...register("image")}
+            className="w-full p-2 border border-gray-300 rounded-lg"
+          />
+        </div>
+        {errors.image && <p className="text-red-500 text-sm">{errors.image.message}</p>}
       </div>
-      {errors.image && <p className="text-red-500 text-sm">{errors.image.message}</p>}
 
       <button
         type="submit"

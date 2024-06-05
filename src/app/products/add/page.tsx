@@ -3,8 +3,6 @@
 import React, { useState } from "react";
 import { useRouter } from "next/navigation";
 import ProductForm from "../../../components/products/ProductForm";
-import Sidebar from "../../../components/dashboard/Sidebar";
-import ProfileSection from "../../../components/dashboard/ProfileSection";
 import { useAuth } from "../../../context/SessionAuthProvider";
 
 const AddProductPage = () => {
@@ -22,12 +20,12 @@ const AddProductPage = () => {
     setError("");
 
     if (!authState.token) {
-      setError("You need to be logged in to add a product.");
+      setError("Necesitas estar conectado para agregar un producto.");
       return;
     }
 
     if (!authState.role || authState.role !== "restaurant") {
-      setError("You must be a restaurant to add a product.");
+      setError("Debes ser un restaurante para agregar un producto.");
       return;
     }
 
@@ -42,7 +40,7 @@ const AddProductPage = () => {
       });
 
       if (!response.ok) {
-        throw new Error("Failed to add product");
+        throw new Error("No se pudo agregar el producto");
       }
 
       // Redirigir a la lista de productos después de añadir exitosamente
@@ -54,25 +52,18 @@ const AddProductPage = () => {
 
   // Si no hay token o el usuario no es restaurante, mostrar el mensaje de error en lugar del formulario
   if (!authState.token) {
-    return <p>You need to be logged in to add a product.</p>;
+    return <p className="text-red-500 text-center mt-4">Necesitas estar conectado para agregar un producto.</p>;
   }
 
   if (!authState.role || authState.role !== "restaurant") {
-    return <p>You must be a restaurant to add a product.</p>;
+    return <p className="text-red-500 text-center mt-4">Debes ser un restaurante para agregar un producto.</p>;
   }
 
   return (
-    <div className="flex h-screen ">
-      <Sidebar role="restaurant" />
-      <div className="flex-1 flex flex-col bg-gray-100">
-        <div className="flex justify-end p-4">
-          <ProfileSection />
-        </div>
-        <div className="flex-1 flex items-center justify-center p-6">
-            <ProductForm onSubmit={handleSubmit} />
-            {error && <p className="text-red-500 text-center mt-4">{error}</p>}
-        </div>
-      </div>
+    <div className="max-w-4xl mx-auto mt-10 bg-white p-8 shadow-md rounded-lg">
+      <h1 className="text-3xl font-bold text-center mb-6">Añadir Producto</h1>
+      <ProductForm onSubmit={handleSubmit} />
+      {error && <p className="text-red-500 text-center mt-4">{error}</p>}
     </div>
   );
 };
