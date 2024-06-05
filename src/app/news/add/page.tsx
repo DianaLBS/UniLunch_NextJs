@@ -1,4 +1,5 @@
 "use client";
+
 import React, { useState } from "react";
 import { useRouter } from "next/navigation";
 import NewForm from "../../../components/NewForm";
@@ -15,18 +16,17 @@ const AddNewPage = () => {
     image: string;
   }) => {
     setError("");
-    setError("");
 
     if (!authState.token) {
       setError("You need to be logged in to add a new.");
       return;
     }
-
+    /*
     if (!authState.role || authState.role !== "restaurant") {
       setError("You must be a restaurant to add a new.");
       return;
     }
-
+    */
     try {
       const response = await fetch(`${process.env.NEXT_PUBLIC_BACKEND_URL}/news`, {
         method: "POST",
@@ -41,7 +41,7 @@ const AddNewPage = () => {
         throw new Error("Failed to add new");
       }
 
-      // Redirigir a la lista de novedades después de añadir exitosamente
+      // Redirigir a la lista de productos después de añadir exitosamente
       router.push("/news/list");
     } catch (err) {
       setError(err instanceof Error ? err.message : String(err));
@@ -53,15 +53,10 @@ const AddNewPage = () => {
     return <p>You need to be logged in to add a new.</p>;
   }
 
-  if (!authState.role || authState.role !== "restaurant") {
-    return <p>You must be a restaurant to add a new.</p>;
-  }
 
-  //Cambiar por otro tipo de formulario. 
   return (
     <div>
-      <h1>Add New</h1>
-
+      <h1>Add new</h1>
       <NewForm onSubmit={handleSubmit} />
       {error && <p>{error}</p>}
     </div>
