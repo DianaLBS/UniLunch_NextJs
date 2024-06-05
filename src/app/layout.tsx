@@ -21,16 +21,14 @@ export default function RootLayout({
   children: React.ReactNode;
 }>) {
   return (
-    <html lang="en">
+    <html lang="en" >
       <body className={inter.className}>
-        <main className="container">
           <SessionAuthProvider>
             <ProductProvider>
-              <Navbar />
+            <Navbar />
               {children}
             </ProductProvider>
           </SessionAuthProvider>
-        </main>
       </body>
     </html>
   );

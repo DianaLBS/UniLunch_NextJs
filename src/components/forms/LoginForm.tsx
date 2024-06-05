@@ -35,7 +35,7 @@ const LoginForm: React.FC = () => {
     <div className="flex h-screen items-center justify-center bg-cover bg-center m-0 p-0" style={{ backgroundImage: `url(${backgroundImage.src})` }}>
       <div className="bg-white rounded-lg shadow-lg flex flex-col md:flex-row max-w-4xl w-full overflow-hidden m-0">
         <div className="hidden md:flex md:w-1/2 flex-col items-center justify-center bg-gradient-to-r from-blue-500 to-indigo-700 p-4">
-          <h1 className="text-4xl font-bold text-white m-0">¡Bienvenido a UniLunch! </h1>
+          <h1 className="text-4xl font-bold text-white m-0">¡Bienvenido a UniLunch</h1>
           <p className="text-white mt-5 text-justify m-0">
             Ingresa tus datos personales, selecciona tu almuerzo favorito y paga de manera rápida y sencilla con nuestro sistema de QR. ¡Disfruta de una experiencia sin complicaciones!
           </p>

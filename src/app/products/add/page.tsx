@@ -19,6 +19,16 @@ const AddProductPage = () => {
   }) => {
     setError("");
 
+    if (!authState.token) {
+      setError("You need to be logged in to add a product.");
+      return;
+    }
+
+    if (!authState.role || authState.role !== "restaurant") {
+      setError("You must be a restaurant to add a product.");
+      return;
+    }
+
     try {
       const response = await fetch(`${process.env.NEXT_PUBLIC_BACKEND_URL}/products`, {
         method: "POST",
@@ -39,6 +49,15 @@ const AddProductPage = () => {
       setError(err instanceof Error ? err.message : String(err));
     }
   };
+
+  // Si no hay token o el usuario no es restaurante, mostrar el mensaje de error en lugar del formulario
+  if (!authState.token) {
+    return <p>You need to be logged in to add a product.</p>;
+  }
+
+  if (!authState.role || authState.role !== "restaurant") {
+    return <p>You must be a restaurant to add a product.</p>;
+  }
 
   return (
     <div>
