@@ -6,6 +6,7 @@ import React from "react";
 import SessionAuthProvider from "../context/SessionAuthProvider";
 import Navbar from "../components/ui/NavBar";
 import ProductProvider from "../context/ProductContext";
+import CartProvider from "../context/CartContext";
 
 const inter = Inter({ subsets: ["latin"] });
 
@@ -25,7 +26,9 @@ export default function RootLayout({
       <body className={inter.className}>
           <SessionAuthProvider>
             <ProductProvider>
-              {children}
+              <CartProvider>
+                {children}
+              </CartProvider>
             </ProductProvider>
           </SessionAuthProvider>
       </body>
