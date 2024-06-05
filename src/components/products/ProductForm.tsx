@@ -6,14 +6,14 @@ import { yupResolver } from "@hookform/resolvers/yup";
 import * as Yup from "yup";
 
 const validationSchema = Yup.object().shape({
-  name: Yup.string().required("Name is required"),
+  name: Yup.string().required("El nombre es requerido"),
   description: Yup.string()
-    .required("Description is required")
-    .min(10, "Description must be at least 10 characters")
-    .max(150, "Description must be less than 150 characters"),
-  price: Yup.number().required("Price is required").positive("Price must be positive"),
-  stock: Yup.number().required("Stock is required").positive("Stock must be positive"),
-  image: Yup.string().url("Invalid URL"),
+    .required("La descripción es requerida")
+    .min(10, "La descripción debe tener al menos 10 caracteres")
+    .max(150, "La descripción debe tener menos de 150 caracteres"),
+  price: Yup.number().required("El precio es requerido").positive("El precio debe ser un número positivo"),
+  stock: Yup.number().required("El stock es requerido").positive("El stock debe ser un número positivo"),
+  image: Yup.string().url("URL inválida").optional(),
 });
 
 interface ProductFormProps {
@@ -22,14 +22,14 @@ interface ProductFormProps {
     description: string;
     price: number;
     stock: number;
-    image: string;
+    image?: string;
   };
   onSubmit: (data: {
     name: string;
     description: string;
     price: number;
     stock: number;
-    image: string;
+    image?: string;
   }) => void;
 }
 
@@ -50,28 +50,59 @@ const ProductForm: React.FC<ProductFormProps> = ({ initialData, onSubmit }) => {
   };
 
   return (
-    <form onSubmit={handleSubmit(handleFormSubmit)}>
-      <div>
-        <input type="text" placeholder="Name" {...register("name")} />
-        <p>{errors.name?.message}</p>
+    <form onSubmit={handleSubmit(handleFormSubmit)} className="bg-gray-100 p-4 rounded-lg">
+      <div className="mb-4">
+        <label className="block text-sm font-bold mb-2">Nombre</label>
+        <input
+          type="text"
+          placeholder="Nombre"
+          {...register("name")}
+          className="w-full p-2 border border-gray-300 rounded-lg"
+        />
+        <p className="text-red-500 text-sm">{errors.name?.message}</p>
       </div>
-      <div>
-        <textarea placeholder="Description" {...register("description")} />
-        <p>{errors.description?.message}</p>
+      <div className="mb-4">
+        <label className="block text-sm font-bold mb-2">Descripción</label>
+        <textarea
+          placeholder="Descripción"
+          {...register("description")}
+          className="w-full p-2 border border-gray-300 rounded-lg"
+        />
+        <p className="text-red-500 text-sm">{errors.description?.message}</p>
       </div>
-      <div>
-        <input type="number" placeholder="Price" {...register("price")} />
-        <p>{errors.price?.message}</p>
+      <div className="mb-4">
+        <label className="block text-sm font-bold mb-2">Precio</label>
+        <input
+          type="number"
+          placeholder="Precio"
+          {...register("price")}
+          className="w-full p-2 border border-gray-300 rounded-lg"
+        />
+        <p className="text-red-500 text-sm">{errors.price?.message}</p>
       </div>
-      <div>
-        <input type="number" placeholder="Stock" {...register("stock")} />
-        <p>{errors.stock?.message}</p>
+      <div className="mb-4">
+        <label className="block text-sm font-bold mb-2">Stock</label>
+        <input
+          type="number"
+          placeholder="Stock"
+          {...register("stock")}
+          className="w-full p-2 border border-gray-300 rounded-lg"
+        />
+        <p className="text-red-500 text-sm">{errors.stock?.message}</p>
       </div>
-      <div>
-        <input type="text" placeholder="Image URL" {...register("image")} />
-        <p>{errors.image?.message}</p>
+      <div className="mb-4">
+        <label className="block text-sm font-bold mb-2">URL de la Imagen (opcional)</label>
+        <input
+          type="text"
+          placeholder="URL de la Imagen"
+          {...register("image")}
+          className="w-full p-2 border border-gray-300 rounded-lg"
+        />
+        <p className="text-red-500 text-sm">{errors.image?.message}</p>
       </div>
-      <button type="submit">Submit</button>
+      <button type="submit" className="bg-blue-500 text-white p-2 rounded-lg">
+        {initialData ? 'Actualizar Producto' : 'Agregar Producto'}
+      </button>
     </form>
   );
 };

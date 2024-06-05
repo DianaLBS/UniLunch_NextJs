@@ -1,9 +1,9 @@
 "use client";
 
 import React from "react";
-import { Product } from "../../context/ProductContext";
-import { useAuth } from "../../DataContext/../context/SessionAuthProvider";
-import { useProducts } from "../../context/ProductContext";
+import { Product } from "@/context/ProductContext";
+import { useAuth } from "@/context/SessionAuthProvider";
+import { useProducts } from "@/context/ProductContext";
 import Link from "next/link";
 
 const ProductItem = ({ product }: { product: Product }) => {

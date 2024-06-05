@@ -1,6 +1,6 @@
 "use client";
 import React from "react";
-import { useProducts } from "../../context/ProductContext";
+import { useProducts } from "@/context/ProductContext";
 import ProductItem from "./ProductItem";
 
 const ProductList = () => {

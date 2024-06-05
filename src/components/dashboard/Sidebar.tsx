@@ -21,7 +21,7 @@ const Sidebar = ({ role }) => {
 
   const restaurantLinks = [
     ...commonLinks,
-    { href: '/dashboard/products', label: 'Productos', icon: <AiFillShopping /> }
+    { href: '/products', label: 'Productos', icon: <AiFillShopping /> }
   ];
 
   const links = role === 'student' ? studentLinks : restaurantLinks;

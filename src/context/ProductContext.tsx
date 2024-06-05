@@ -1,8 +1,9 @@
 "use client";
-// context/ProductContext.tsx
+
 import { createContext, useContext, useReducer, ReactNode, useEffect } from "react";
 import React from "react";
-// context/ProductContext.tsx
+
+// Definición de la interfaz Product
 export interface Product {
   id: number;
   name: string;
@@ -12,6 +13,7 @@ export interface Product {
   image: string;
 }
 
+// Estado inicial para los productos
 interface State {
   products: Product[];
 }
@@ -20,12 +22,14 @@ const initialState: State = {
   products: [],
 };
 
+// Tipos de acciones para el reducer
 type Action = 
   | { type: "SET_PRODUCTS"; payload: Product[] }
   | { type: "ADD_PRODUCT"; payload: Product }
   | { type: "UPDATE_PRODUCT"; payload: Product }
   | { type: "DELETE_PRODUCT"; payload: number };
 
+// Reducer para manejar el estado de los productos
 const reducer = (state: State, action: Action): State => {
   switch (action.type) {
     case "SET_PRODUCTS":
@@ -49,6 +53,7 @@ const reducer = (state: State, action: Action): State => {
   }
 };
 
+// Creación del contexto de productos
 const ProductContext = createContext<{
   state: State;
   dispatch: React.Dispatch<Action>;
@@ -57,13 +62,15 @@ const ProductContext = createContext<{
   dispatch: () => undefined,
 });
 
+// Hook personalizado para usar el contexto de productos
 export const useProducts = () => useContext(ProductContext);
 
+// Provider del contexto de productos
 const ProductProvider = ({ children }: { children: ReactNode }) => {
   const [state, dispatch] = useReducer(reducer, initialState);
 
   useEffect(() => {
-    // Fetch products from API
+    // Fetch de productos desde la API
     const fetchProducts = async () => {
       const response = await fetch(`${process.env.NEXT_PUBLIC_BACKEND_URL}/products`);
       const data = await response.json();
