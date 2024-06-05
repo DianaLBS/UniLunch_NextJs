@@ -1,49 +1,38 @@
-"use client"
-import React from "react";
-import { useSession } from "next-auth/react";
-import ProductList from '../../components/products/ProductList'; // Ajusta la ruta según la estructura real de tu proyecto
-import ProductForm from "../../components/ProductForm"; // Formulario para agregar o editar productos
+"use client";
+import React, { useEffect } from 'react';
+import { useRouter } from 'next/navigation';
+import { useSession } from 'next-auth/react';
+import StudentDashboard from '@/components/dashboard/StudentDashboard';
+import RestaurantDashboard from '@/components/dashboard/RestaurantDashboard';
 
-const Dashboard = () => {
+const DashboardPage = () => {
   const { data: session, status } = useSession();
+  const router = useRouter();
 
-  if (status === "loading") {
+  useEffect(() => {
+    if (status === 'loading') return; // Esperar a que la sesión se cargue
+    if (!session) {
+      router.push('/login');
+    }
+  }, [session, status, router]);
+
+  if (status === 'loading') {
     return <p>Cargando...</p>;
   }
 
   if (!session) {
-    return (
-      <div>
-        <h1>No estás autenticado</h1>
-        <p>Por favor, inicia sesión para acceder a esta página.</p>
-      </div>
-    );
+    return null; // Evitar mostrar contenido mientras se redirige
   }
 
-  const userRole = session.user.role; // Asumiendo que el rol del usuario está en la sesión
+  if (session.user.role === 'student') {
+    return <StudentDashboard />;
+  }
 
-  // Función para manejar la creación o edición de productos (sólo para restaurantes)
-  const handleProductSubmit = (productData) => {
-    console.log("Producto a procesar:", productData);
-    // Aquí deberías añadir la lógica para enviar estos datos al backend
-  };
+  if (session.user.role === 'restaurant') {
+    return <RestaurantDashboard />;
+  }
 
-  return (
-    <div>
-      <h1>Dashboard</h1>
-      {/* Renderizar contenido basado en el rol del usuario */}
-      {userRole === 'restaurant' ? (
-        <>
-          <ProductForm onSubmit={handleProductSubmit} />
-          <ProductList />
-        </>
-      ) : userRole === 'student' ? (
-        <ProductList />
-      ) : (
-        <p>No tienes permisos para ver esta página.</p>
-      )}
-    </div>
-  );
+  return <p>No tienes permisos para ver esta página.</p>;
 };
 
-export default Dashboard;
+export default DashboardPage;
