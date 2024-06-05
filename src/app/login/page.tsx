@@ -5,10 +5,10 @@ import {useAuth} from "../../context/SessionAuthProvider";
 import {useRouter} from "next/navigation";
 import Navbar from "../../components/NavBar";
 
-
 const LoginPage: React.FC = () => {
 
   return (
+
     <div>
       <Navbar />
       <LoginForm />

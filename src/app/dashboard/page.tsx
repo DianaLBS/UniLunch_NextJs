@@ -1,9 +1,12 @@
 "use client";
+
 import React, { useEffect } from 'react';
 import { useRouter } from 'next/navigation';
 import { useSession } from 'next-auth/react';
 import StudentDashboard from '@/components/dashboard/StudentDashboard';
 import RestaurantDashboard from '@/components/dashboard/RestaurantDashboard';
+import Navbar from "@/components/NavBar";
+
 
 const DashboardPage = () => {
   const { data: session, status } = useSession();
