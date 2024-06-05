@@ -4,6 +4,8 @@ import React from "react";
 import { useForm } from "react-hook-form";
 import { yupResolver } from "@hookform/resolvers/yup";
 import * as Yup from "yup";
+import { useAuth } from "../../context/SessionAuthProvider";
+import { useProducts } from "../../context/ProductContext";
 
 const validationSchema = Yup.object().shape({
   name: Yup.string().required("Name is required"),
@@ -16,24 +18,9 @@ const validationSchema = Yup.object().shape({
   image: Yup.string().url("Invalid URL"),
 });
 
-interface ProductFormProps {
-  initialData?: {
-    name: string;
-    description: string;
-    price: number;
-    stock: number;
-    image: string;
-  };
-  onSubmit: (data: {
-    name: string;
-    description: string;
-    price: number;
-    stock: number;
-    image: string;
-  }) => void;
-}
-
-const ProductForm: React.FC<ProductFormProps> = ({ initialData, onSubmit }) => {
+const AddProductForm = () => {
+  const { dispatch } = useProducts();
+  const { state: authState } = useAuth();
   const {
     register,
     handleSubmit,
@@ -41,16 +28,30 @@ const ProductForm: React.FC<ProductFormProps> = ({ initialData, onSubmit }) => {
     reset,
   } = useForm({
     resolver: yupResolver(validationSchema),
-    defaultValues: initialData,
   });
 
-  const handleFormSubmit = (data: any) => {
-    onSubmit(data);
-    reset();
+  const onSubmit = async (data: any) => {
+    const response = await fetch(`${process.env.NEXT_PUBLIC_BACKEND_URL}/products`, {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json",
+        "Authorization": `Bearer ${authState.token}`,
+      },
+      body: JSON.stringify(data),
+    });
+
+    if (response.ok) {
+      const product = await response.json();
+      dispatch({ type: "ADD_PRODUCT", payload: product });
+      reset();
+    } else {
+      console.error("Failed to add product");
+    }
   };
 
   return (
-    <form onSubmit={handleSubmit(handleFormSubmit)}>
+    <form onSubmit={handleSubmit(onSubmit)}>
+      <h2>Add Product</h2>
       <div>
         <input type="text" placeholder="Name" {...register("name")} />
         <p>{errors.name?.message}</p>
@@ -71,9 +72,9 @@ const ProductForm: React.FC<ProductFormProps> = ({ initialData, onSubmit }) => {
         <input type="text" placeholder="Image URL" {...register("image")} />
         <p>{errors.image?.message}</p>
       </div>
-      <button type="submit">Submit</button>
+      <button type="submit">Add Product</button>
     </form>
   );
 };
 
-export default ProductForm;
+export default AddProductForm;

@@ -1,9 +1,10 @@
 "use client";
-import React, { useEffect } from 'react';
-import { useRouter } from 'next/navigation';
-import { useSession } from 'next-auth/react';
-import StudentDashboard from '@/components/dashboard/StudentDashboard';
-import RestaurantDashboard from '@/components/dashboard/RestaurantDashboard';
+import { useSession } from "next-auth/react";
+import React, { useEffect } from "react";
+import Navbar from "@/components/ui/NavBar";
+import { useRouter } from "next/navigation";
+import StudentDashboard from  "@/components/dashboard/StudentDashboard";
+import RestaurantDashboard from "@/components/dashboard/RestaurantDashboard";
 
 const DashboardPage = () => {
   const { data: session, status } = useSession();

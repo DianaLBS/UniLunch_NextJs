@@ -2,7 +2,7 @@
 
 import React, { useState, useEffect } from 'react';
 import Sidebar from '@/components/dashboard/Sidebar';
-import NavBar from '@/components/NavBar';
+import NavBar from '@/components/ui/NavBar';
 import ProductForm from '@/components/products/ProductForm';
 import ProductList from '@/components/products/ProductList';
 import {useProducts } from '@/context/ProductContext';

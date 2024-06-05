@@ -2,35 +2,33 @@
 
 import React, { useState } from "react";
 import { useRouter } from "next/navigation";
-import ProductForm from "../../../components/products/ProductForm";
-import { useAuth } from "../../../context/SessionAuthProvider";
+import NewForm from "@/components/News/NewForm";
+import { useAuth } from "@/context/SessionAuthProvider";
 
-const AddProductPage = () => {
+const AddNewPage = () => {
   const { state: authState } = useAuth();
   const router = useRouter();
   const [error, setError] = useState("");
 
   const handleSubmit = async (data: {
-    name: string;
+    title: string;
     description: string;
-    price: number;
-    stock: number;
     image: string;
   }) => {
     setError("");
 
     if (!authState.token) {
-      setError("You need to be logged in to add a product.");
+      setError("You need to be logged in to add a new.");
       return;
     }
-
+    /*
     if (!authState.role || authState.role !== "restaurant") {
-      setError("You must be a restaurant to add a product.");
+      setError("You must be a restaurant to add a new.");
       return;
     }
-
+    */
     try {
-      const response = await fetch(`${process.env.NEXT_PUBLIC_BACKEND_URL}/products`, {
+      const response = await fetch(`${process.env.NEXT_PUBLIC_BACKEND_URL}/news`, {
         method: "POST",
         headers: {
           "Content-Type": "application/json",
@@ -40,11 +38,11 @@ const AddProductPage = () => {
       });
 
       if (!response.ok) {
-        throw new Error("Failed to add product");
+        throw new Error("Failed to add new");
       }
 
       // Redirigir a la lista de productos después de añadir exitosamente
-      router.push("/products/list");
+      router.push("/news/list");
     } catch (err) {
       setError(err instanceof Error ? err.message : String(err));
     }
@@ -52,20 +50,17 @@ const AddProductPage = () => {
 
   // Si no hay token o el usuario no es restaurante, mostrar el mensaje de error en lugar del formulario
   if (!authState.token) {
-    return <p>You need to be logged in to add a product.</p>;
+    return <p>You need to be logged in to add a new.</p>;
   }
 
-  if (!authState.role || authState.role !== "restaurant") {
-    return <p>You must be a restaurant to add a product.</p>;
-  }
 
   return (
     <div>
-      <h1>Add Product</h1>
-      <ProductForm onSubmit={handleSubmit} />
+      <h1>Add new</h1>
+      <NewForm onSubmit={handleSubmit} />
       {error && <p>{error}</p>}
     </div>
   );
 };
 
-export default AddProductPage;
+export default AddNewPage;

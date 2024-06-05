@@ -6,34 +6,28 @@ import { yupResolver } from "@hookform/resolvers/yup";
 import * as Yup from "yup";
 
 const validationSchema = Yup.object().shape({
-  name: Yup.string().required("Name is required"),
+  title: Yup.string().required("Title is required"),
   description: Yup.string()
     .required("Description is required")
     .min(10, "Description must be at least 10 characters")
     .max(150, "Description must be less than 150 characters"),
-  price: Yup.number().required("Price is required").positive("Price must be positive"),
-  stock: Yup.number().required("Stock is required").positive("Stock must be positive"),
   image: Yup.string().url("Invalid URL"),
 });
 
-interface ProductFormProps {
+interface NewFormProps {
   initialData?: {
-    name: string;
+    title: string;
     description: string;
-    price: number;
-    stock: number;
     image: string;
   };
   onSubmit: (data: {
-    name: string;
+    title: string;
     description: string;
-    price: number;
-    stock: number;
     image: string;
   }) => void;
 }
 
-const ProductForm: React.FC<ProductFormProps> = ({ initialData, onSubmit }) => {
+const NewForm: React.FC<NewFormProps> = ({ initialData, onSubmit }) => {
   const {
     register,
     handleSubmit,
@@ -52,20 +46,12 @@ const ProductForm: React.FC<ProductFormProps> = ({ initialData, onSubmit }) => {
   return (
     <form onSubmit={handleSubmit(handleFormSubmit)}>
       <div>
-        <input type="text" placeholder="Name" {...register("name")} />
-        <p>{errors.name?.message}</p>
+        <input type="text" placeholder="Title" {...register("title")} />
+        <p>{errors.title?.message}</p>
       </div>
       <div>
         <textarea placeholder="Description" {...register("description")} />
         <p>{errors.description?.message}</p>
-      </div>
-      <div>
-        <input type="number" placeholder="Price" {...register("price")} />
-        <p>{errors.price?.message}</p>
-      </div>
-      <div>
-        <input type="number" placeholder="Stock" {...register("stock")} />
-        <p>{errors.stock?.message}</p>
       </div>
       <div>
         <input type="text" placeholder="Image URL" {...register("image")} />
@@ -76,4 +62,4 @@ const ProductForm: React.FC<ProductFormProps> = ({ initialData, onSubmit }) => {
   );
 };
 
-export default ProductForm;
+export default NewForm;
