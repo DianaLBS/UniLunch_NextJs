@@ -11,12 +11,12 @@ const CheckoutPage = () => {
 
     useEffect(() => {
         if (!authState.token) {
-            router.push("/login");
+            router.push("/dashboard");
         }
         }, [authState.token, router]);
 
         if (!authState.token) {
-        return router.push("/login");
+        return router.push("/dashboard");
         }
 
         if (!authState.role || authState.role !== "student") {
