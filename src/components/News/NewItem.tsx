@@ -2,8 +2,8 @@
 
 import React from "react";
 import { New } from "../context/NewContext";
-import { useAuth } from "../context/SessionAuthProvider";
-import { useNews } from "../context/NewContext";
+import { useAuth } from "@/context/SessionAuthProvider";
+import { useNews } from "@/context/NewContext";
 import Link from "next/link";
 
 const NewItem = ({ news }: { news: New }) => {

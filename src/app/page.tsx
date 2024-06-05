@@ -2,6 +2,7 @@ import React from "react";
 import ButtonAuth from "../components/ui/ButtonAuth";
 import Image from "next/image";
 import { FaUtensils, FaQrcode, FaUserFriends, FaMobileAlt } from "react-icons/fa";
+import Navbar from "@/components/ui/NavBar";
 
 const Home = () => {
   return (

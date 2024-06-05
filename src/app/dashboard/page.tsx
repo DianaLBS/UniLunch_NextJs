@@ -1,36 +1,39 @@
 "use client";
 import { useSession } from "next-auth/react";
-import React from "react";
+import React, { useEffect } from "react";
 import Navbar from "@/components/ui/NavBar";
+import { useRouter } from "next/navigation";
+import StudentDashboard from  "@/components/dashboard/StudentDashboard";
+import RestaurantDashboard from "@/components/dashboard/RestaurantDashboard";
 
-const Dashboard = () => {
+const DashboardPage = () => {
   const { data: session, status } = useSession();
+  const router = useRouter();
 
-  if (status === "loading") {
-    return <p>Evaluando si ya estás usando nuestro sistema ;)...</p>;
+  useEffect(() => {
+    if (status === 'loading') return; // Esperar a que la sesión se cargue
+    if (!session) {
+      router.push('/login');
+    }
+  }, [session, status, router]);
+
+  if (status === 'loading') {
+    return <p>Cargando...</p>;
   }
-  console.log(session?.user?.token);
 
-/*const getRestaurants = async () => {
-    const res = await fetch(`${process.env.NEXT_PUBLIC_BACKEND_URL}/users`, {
-      method: "GET",
-      headers: {
-        "Content-Type": "application/json",
-        Authorization: `Bearer ${session?.user?.token}`,
-      },
-    });
-    const data = await res.json();
-    console.log(data);
-  };*/
+  if (!session) {
+    return null; // Evitar mostrar contenido mientras se redirige
+  }
 
-  return (
-    <div>
-      <h1>Dashboard</h1>
+  if (session.user.role === 'student') {
+    return <StudentDashboard />;
+  }
 
-      <pre>
-        <code>{JSON.stringify(session, null, 2)}</code>
-      </pre>
-    </div>
-  );
+  if (session.user.role === 'restaurant') {
+    return <RestaurantDashboard />;
+  }
+
+  return <p>No tienes permisos para ver esta página.</p>;
 };
-export default Dashboard;
+
+export default DashboardPage;
