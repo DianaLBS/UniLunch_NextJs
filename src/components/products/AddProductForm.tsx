@@ -8,14 +8,14 @@ import { useAuth } from "../../context/SessionAuthProvider";
 import { useProducts } from "../../context/ProductContext";
 
 const validationSchema = Yup.object().shape({
-  name: Yup.string().required("Name is required"),
+  name: Yup.string().required("El nombre es obligatorio"),
   description: Yup.string()
-    .required("Description is required")
-    .min(10, "Description must be at least 10 characters")
-    .max(150, "Description must be less than 150 characters"),
-  price: Yup.number().required("Price is required").positive("Price must be positive"),
-  stock: Yup.number().required("Stock is required").positive("Stock must be positive"),
-  image: Yup.string().url("Invalid URL"),
+    .required("La descripción es obligatoria")
+    .min(10, "La descripción debe tener al menos 10 caracteres")
+    .max(150, "La descripción debe tener menos de 150 caracteres"),
+  price: Yup.number().required("El precio es obligatorio").positive("El precio debe ser positivo"),
+  stock: Yup.number().required("El stock es obligatorio").positive("El stock debe ser positivo"),
+  image: Yup.string().url("URL inválida"),
 });
 
 const AddProductForm = () => {
@@ -35,7 +35,7 @@ const AddProductForm = () => {
       method: "POST",
       headers: {
         "Content-Type": "application/json",
-        "Authorization": `Bearer ${authState.token}`,
+        Authorization: `Bearer ${authState.token}`,
       },
       body: JSON.stringify(data),
     });
@@ -50,30 +50,64 @@ const AddProductForm = () => {
   };
 
   return (
-    <form onSubmit={handleSubmit(onSubmit)}>
-      <h2>Add Product</h2>
-      <div>
-        <input type="text" placeholder="Name" {...register("name")} />
-        <p>{errors.name?.message}</p>
-      </div>
-      <div>
-        <textarea placeholder="Description" {...register("description")} />
-        <p>{errors.description?.message}</p>
-      </div>
-      <div>
-        <input type="number" placeholder="Price" {...register("price")} />
-        <p>{errors.price?.message}</p>
-      </div>
-      <div>
-        <input type="number" placeholder="Stock" {...register("stock")} />
-        <p>{errors.stock?.message}</p>
-      </div>
-      <div>
-        <input type="text" placeholder="Image URL" {...register("image")} />
-        <p>{errors.image?.message}</p>
-      </div>
-      <button type="submit">Add Product</button>
-    </form>
+    
+      <form onSubmit={handleSubmit(onSubmit)}>
+        <div className="mb-4">
+          <label className="block text-gray-700">Nombre</label>
+          <input
+            type="text"
+            placeholder="Nombre"
+            {...register("name")}
+            className="w-full p-2 border border-gray-300 rounded-lg"
+          />
+          <p className="text-red-500 text-sm">{errors.name?.message}</p>
+        </div>
+        <div className="mb-4">
+          <label className="block text-gray-700">Descripción</label>
+          <textarea
+            placeholder="Descripción"
+            {...register("description")}
+            className="w-full p-2 border border-gray-300 rounded-lg"
+          />
+          <p className="text-red-500 text-sm">{errors.description?.message}</p>
+        </div>
+        <div className="mb-4">
+          <label className="block text-gray-700">Precio</label>
+          <input
+            type="number"
+            placeholder="Precio"
+            {...register("price")}
+            className="w-full p-2 border border-gray-300 rounded-lg"
+          />
+          <p className="text-red-500 text-sm">{errors.price?.message}</p>
+        </div>
+        <div className="mb-4">
+          <label className="block text-gray-700">Stock</label>
+          <input
+            type="number"
+            placeholder="Stock"
+            {...register("stock")}
+            className="w-full p-2 border border-gray-300 rounded-lg"
+          />
+          <p className="text-red-500 text-sm">{errors.stock?.message}</p>
+        </div>
+        <div className="mb-4">
+          <label className="block text-gray-700">URL de la Imagen</label>
+          <input
+            type="text"
+            placeholder="URL de la Imagen"
+            {...register("image")}
+            className="w-full p-2 border border-gray-300 rounded-lg"
+          />
+          <p className="text-red-500 text-sm">{errors.image?.message}</p>
+        </div>
+        <button
+          type="submit"
+          className="w-full bg-blue-500 text-white p-2 rounded-lg hover:bg-blue-600"
+        >
+          Agregar Producto
+        </button>
+      </form>
   );
 };
 
