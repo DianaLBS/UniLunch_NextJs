@@ -27,7 +27,8 @@ interface CartItem {
     | { type: "CLEAR_CART" }
     | { type: "SHOW_CART" }
     | { type: "HIDE_CART" }
-    | { type: "UPDATE_TOTAL" };
+    | { type: "UPDATE_TOTAL" }
+    | { type: "LOAD_CART"; payload: State };
   
   const cartReducer = (state: State, action: Action): State => {
     switch (action.type) {
@@ -78,6 +79,10 @@ interface CartItem {
         return { ...state, isCartVisible: true };
       case "HIDE_CART":
         return { ...state, isCartVisible: false };
+        
+        case "LOAD_CART":
+            return action.payload;
+
       default:
         return state;
     }
@@ -101,7 +106,18 @@ interface CartItem {
         dispatch({ type: "HIDE_CART" });
       }
     }, [state.cartItems.length]);
-  
+    
+    useEffect(() => {
+            const savedCart = localStorage.getItem("cartState");
+            if (savedCart) {
+                dispatch({ type: "LOAD_CART", payload: JSON.parse(savedCart) });
+            }
+        }, []);
+
+    useEffect(() => {
+        localStorage.setItem("cartState", JSON.stringify(state));
+    }, [state]);
+
     return (
       <CartContext.Provider value={{ state, dispatch }}>
         {children}
