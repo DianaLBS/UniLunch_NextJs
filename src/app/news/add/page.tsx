@@ -2,7 +2,7 @@
 
 import React, { useState } from "react";
 import { useRouter } from "next/navigation";
-import NewForm from "../../../components/NewForm";
+import NewForm from "../../../components/News/NewForm";
 import { useAuth } from "../../../context/SessionAuthProvider";
 
 const AddNewPage = () => {

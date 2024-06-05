@@ -4,8 +4,8 @@ import React from "react";
 import { useForm } from "react-hook-form";
 import { yupResolver } from "@hookform/resolvers/yup";
 import * as Yup from "yup";
-import { useAuth } from "../context/SessionAuthProvider";
-import { useNews } from "../context/NewContext";
+import { useAuth } from "../../context/SessionAuthProvider";
+import { useNews } from "../../context/NewContext";
 
 const validationSchema = Yup.object().shape({
     title: Yup.string().required("Name is required"),
