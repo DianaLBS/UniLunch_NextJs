@@ -19,8 +19,8 @@ const CartList: React.FC = () => {
 
   return (
     <div className={`cart-list ${state.isCartVisible ? 'visible' : ''}`}>
-      <h1>Cart</h1>
-      <button onClick={handleClose}>Close</button>
+      <h1 className="text-3xl font-bold mb-4">Your Cart</h1>
+      <button onClick={handleClose} className="text-gray-500 hover:text-gray-700 mb-4">Close</button>
       {state.cartItems.length === 0 ? (
         <p>No items in the cart.</p>
       ) : (
@@ -28,10 +28,15 @@ const CartList: React.FC = () => {
           {state.cartItems.map(item => (
             <CartItem key={item.productId} item={item} />
           ))}
-          <div className="total">
-            <h2>Total: ${state.totalValue.toFixed(2)}</h2>
+          <div className="total mt-4">
+            <h2 className="text-2xl font-bold">Total: ${state.totalValue.toFixed(2)}</h2>
           </div>
-          <button onClick={handleCheckout}>Checkout</button>
+          <button
+            onClick={handleCheckout}
+            className="mt-4 w-full bg-blue-500 text-white py-2 rounded-lg hover:bg-blue-600 transition-colors"
+          >
+            Checkout
+          </button>
         </div>
       )}
     </div>

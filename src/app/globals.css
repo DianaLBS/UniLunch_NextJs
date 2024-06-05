@@ -4,15 +4,17 @@
 
 :root {
   --foreground-rgb: 255, 255, 255;
-  --background-start-rgb: 0, 0, 0;
-  --background-end-rgb: 0, 0, 0;
+  --background-start-rgb: 59, 130, 246; /* Azul */
+  --background-end-rgb: 99, 102, 241; /* Índigo */
 }
 
 body {
   color: rgb(var(--foreground-rgb));
-  background: #ffffff
+  background: linear-gradient(
+    to right,
+    rgb(var(--background-start-rgb)),
     rgb(var(--background-end-rgb))
-  ) rgb(var(--background-start-rgb));
+  );
 }
 
 @layer utilities {

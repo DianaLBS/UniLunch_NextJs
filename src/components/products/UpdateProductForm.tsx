@@ -1,25 +1,30 @@
 "use client";
-
 import React, { useEffect } from "react";
 import { useForm } from "react-hook-form";
 import { yupResolver } from "@hookform/resolvers/yup";
 import * as Yup from "yup";
-import { useAuth } from "../../context/SessionAuthProvider"; // Ajusta la ruta según tu proyecto
+import { useAuth } from "../../context/SessionAuthProvider";
 import { useProducts } from "../../context/ProductContext";
-import { useRouter } from "next/navigation";
+import { AiOutlineFileText, AiOutlineDollar, AiOutlineStock, AiOutlinePicture } from 'react-icons/ai';
 
+// Definición del esquema de validación con Yup
 const validationSchema = Yup.object().shape({
-  name: Yup.string().required("Name is required"),
+  name: Yup.string().required("El nombre es obligatorio"),
   description: Yup.string()
-    .required("Description is required")
-    .min(10, "Description must be at least 10 characters")
-    .max(150, "Description must be less than 150 characters"),
-  price: Yup.number().required("Price is required").positive("Price must be positive"),
-  stock: Yup.number().required("Stock is required").positive("Stock must be positive"),
-  image: Yup.string().url("Invalid URL"),
+    .required("La descripción es obligatoria")
+    .min(10, "La descripción debe tener al menos 10 caracteres")
+    .max(150, "La descripción debe tener menos de 150 caracteres"),
+  price: Yup.number().required("El precio es obligatorio").positive("El precio debe ser positivo"),
+  stock: Yup.number().required("El stock es obligatorio").positive("El stock debe ser positivo"),
+  image: Yup.string().url("URL inválida"),
 });
 
-const UpdateProductForm = ({ productId }: { productId: string }) => {
+// Definición de las props del componente UpdateProductForm
+interface UpdateProductFormProps {
+  productId: string;
+}
+
+const UpdateProductForm: React.FC<UpdateProductFormProps> = ({ productId }) => {
   const { dispatch, state: { products } } = useProducts();
   const { state: authState } = useAuth();
   const {
@@ -31,7 +36,6 @@ const UpdateProductForm = ({ productId }: { productId: string }) => {
   } = useForm({
     resolver: yupResolver(validationSchema),
   });
-  const router = useRouter();
 
   useEffect(() => {
     // Cargar los datos del producto en el formulario
@@ -59,70 +63,87 @@ const UpdateProductForm = ({ productId }: { productId: string }) => {
       const updatedProduct = await response.json();
       dispatch({ type: "UPDATE_PRODUCT", payload: updatedProduct });
       reset();
-      router.push("/products/list");
     } else {
       console.error("Failed to update product");
     }
   };
 
   return (
-    <form onSubmit={handleSubmit(onSubmit)} className="max-w-4xl mx-auto bg-white p-8 shadow-md rounded-lg space-y-6">
-      <h2 className="text-2xl font-bold text-center mb-6">Update Product</h2>
+    <form onSubmit={handleSubmit(onSubmit)} className="space-y-6">
+      <div>
+        <label className="block text-gray-700">Nombre</label>
+        <div className="flex items-center space-x-2">
+          <AiOutlineFileText size={24} />
+          <input
+            type="text"
+            placeholder="Nombre"
+            {...register("name")}
+            className="w-full p-2 border border-gray-300 rounded-lg"
+          />
+        </div>
+        {errors.name && <p className="text-red-500 text-sm">{errors.name.message}</p>}
+      </div>
       
-      <div className="flex items-center space-x-4">
-        <input
-          type="text"
-          placeholder="Name"
-          {...register("name")}
-          className="w-full p-2 border border-gray-300 rounded-lg"
-        />
+      <div>
+        <label className="block text-gray-700">Descripción</label>
+        <div className="flex items-center space-x-2">
+          <AiOutlineFileText size={24} />
+          <textarea
+            placeholder="Descripción"
+            {...register("description")}
+            className="w-full p-2 border border-gray-300 rounded-lg"
+          />
+        </div>
+        {errors.description && <p className="text-red-500 text-sm">{errors.description.message}</p>}
       </div>
-      {errors.name && <p className="text-red-500 text-sm">{errors.name.message}</p>}
-      
-      <div className="flex items-center space-x-4">
-        <textarea
-          placeholder="Description"
-          {...register("description")}
-          className="w-full p-2 border border-gray-300 rounded-lg"
-        />
-      </div>
-      {errors.description && <p className="text-red-500 text-sm">{errors.description.message}</p>}
 
-      <div className="flex items-center space-x-4">
-        <input
-          type="number"
-          placeholder="Price"
-          {...register("price")}
-          className="w-full p-2 border border-gray-300 rounded-lg"
-        />
+      <div>
+        <label className="block text-gray-700">Precio</label>
+        <div className="flex items-center space-x-2">
+          <AiOutlineDollar size={24} />
+          <input
+            type="number"
+            placeholder="Precio"
+            {...register("price")}
+            className="w-full p-2 border border-gray-300 rounded-lg"
+          />
+        </div>
+        {errors.price && <p className="text-red-500 text-sm">{errors.price.message}</p>}
       </div>
-      {errors.price && <p className="text-red-500 text-sm">{errors.price.message}</p>}
 
-      <div className="flex items-center space-x-4">
-        <input
-          type="number"
-          placeholder="Stock"
-          {...register("stock")}
-          className="w-full p-2 border border-gray-300 rounded-lg"
-        />
+      <div>
+        <label className="block text-gray-700">Stock</label>
+        <div className="flex items-center space-x-2">
+          <AiOutlineStock size={24} />
+          <input
+            type="number"
+            placeholder="Stock"
+            {...register("stock")}
+            className="w-full p-2 border border-gray-300 rounded-lg"
+          />
+        </div>
+        {errors.stock && <p className="text-red-500 text-sm">{errors.stock.message}</p>}
       </div>
-      {errors.stock && <p className="text-red-500 text-sm">{errors.stock.message}</p>}
 
-      <div className="flex items-center space-x-4">
-        <input
-          type="text"
-          placeholder="Image URL"
-          {...register("image")}
-          className="w-full p-2 border border-gray-300 rounded-lg"
-        />
+      <div>
+        <label className="block text-gray-700">URL de la Imagen</label>
+        <div className="flex items-center space-x-2">
+          <AiOutlinePicture size={24} />
+          <input
+            type="text"
+            placeholder="URL de la Imagen"
+            {...register("image")}
+            className="w-full p-2 border border-gray-300 rounded-lg"
+          />
+        </div>
+        {errors.image && <p className="text-red-500 text-sm">{errors.image.message}</p>}
       </div>
-      {errors.image && <p className="text-red-500 text-sm">{errors.image.message}</p>}
 
       <button
         type="submit"
         className="w-full bg-blue-500 text-white p-3 rounded-lg hover:bg-blue-600 transition duration-200"
       >
-        Update Product
+        Actualizar Producto
       </button>
     </form>
   );

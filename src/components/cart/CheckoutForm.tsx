@@ -35,13 +35,18 @@ const CheckoutForm: React.FC = () => {
   };
 
   return (
-    <div className="checkout-form">
-      <h2>Checkout</h2>
-      <p>Total: ${cartState.totalValue.toFixed(2)}</p>
-      <button onClick={handleCheckout}>Generate QR</button>
+    <div className="checkout-form p-8 bg-white rounded-lg shadow-md">
+      <h2 className="text-3xl font-bold mb-4">Checkout</h2>
+      <p className="text-xl mb-4">Total: ${cartState.totalValue.toFixed(2)}</p>
+      <button
+        onClick={handleCheckout}
+        className="w-full bg-blue-500 text-white py-2 rounded-lg hover:bg-blue-600 transition-colors"
+      >
+        Generate QR
+      </button>
       {qrData && (
-        <div>
-          <h3>Scan this QR to get your invoice</h3>
+        <div className="mt-4">
+          <h3 className="text-xl mb-2">Scan this QR to get your invoice</h3>
           <QRCode value={qrData} />
         </div>
       )}

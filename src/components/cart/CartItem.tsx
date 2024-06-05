@@ -21,15 +21,23 @@ const CartItem: React.FC<CartItemProps> = ({ item }) => {
   };
 
   return (
-    <div className="cart-item">
-      <h2>{item.name}</h2>
-      <p>${item.price}</p>
-      <input
-        type="number"
-        value={item.quantity}
-        onChange={handleChangeQuantity}
-      />
-      <button onClick={handleRemove}>Remove</button>
+    <div className="p-4 bg-white rounded-lg shadow-md mb-4 flex items-center justify-between">
+      <div>
+        <h2 className="text-xl font-bold">{item.name}</h2>
+        <p className="text-gray-700">${item.price}</p>
+        <input
+          type="number"
+          value={item.quantity}
+          onChange={handleChangeQuantity}
+          className="w-16 p-1 border border-gray-300 rounded"
+        />
+      </div>
+      <button
+        onClick={handleRemove}
+        className="bg-red-500 text-white px-4 py-2 rounded hover:bg-red-600 transition-colors"
+      >
+        Remove
+      </button>
     </div>
   );
 };

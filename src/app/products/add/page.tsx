@@ -4,6 +4,7 @@ import React, { useState } from "react";
 import { useRouter } from "next/navigation";
 import ProductForm from "../../../components/products/ProductForm";
 import { useAuth } from "../../../context/SessionAuthProvider";
+import backgroundImage from "/public/RefRetaurante.png";
 
 const AddProductPage = () => {
   const { state: authState } = useAuth();
@@ -60,10 +61,12 @@ const AddProductPage = () => {
   }
 
   return (
-    <div className="max-w-4xl mx-auto mt-10 bg-white p-8 shadow-md rounded-lg">
-      <h1 className="text-3xl font-bold text-center mb-6">Añadir Producto</h1>
-      <ProductForm onSubmit={handleSubmit} />
-      {error && <p className="text-red-500 text-center mt-4">{error}</p>}
+    <div className="min-h-screen flex items-center justify-center bg-cover bg-center" style={{ backgroundImage: `url(${backgroundImage.src})` }}>
+      <div className="max-w-4xl w-full bg-white bg-opacity-90 p-8 shadow-md rounded-lg">
+        <h1 className="text-3xl font-bold text-center mb-6">Añadir Producto</h1>
+        <ProductForm onSubmit={handleSubmit} />
+        {error && <p className="text-red-500 text-center mt-4">{error}</p>}
+      </div>
     </div>
   );
 };

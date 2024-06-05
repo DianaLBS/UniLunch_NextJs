@@ -9,7 +9,7 @@ const ProductList = () => {
 
   return (
     <div>
-      <h1>Products</h1>
+      <h1>Productos</h1>
       <div className="product-list">
         {state.products.map(product => (
           <ProductItem key={product.id} product={product} onAddToCart={(product: Product) => {

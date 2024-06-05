@@ -1,5 +1,4 @@
 "use client";
-
 import React, { useEffect, useState } from "react";
 import { useAuth } from "../../context/SessionAuthProvider";
 import ProductItem from "./ProductItem";
@@ -46,14 +45,15 @@ const ProductsPage = () => {
 
   if (loading) {
     return <p>Cargando...</p>;
-  }
+}
 
-  return (
-    <div className="products-page p-4">
-      <h1 className="text-3xl font-bold mb-6">Products</h1>
+return (
+  <div className="products-page p-4 bg-gradient-to-r from-blue-500 to-indigo-700 min-h-screen">
+    <div className="bg-white bg-opacity-90 p-8 rounded-lg shadow-md">
+      <h1 className="text-3xl font-bold mb-6">Productos</h1>
       <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-6">
         {productState.products.length === 0 ? (
-          <p>No products found.</p>
+          <p>No se encontraron productos.</p>
         ) : (
           productState.products.map(product => (
             <ProductItem key={product.id} product={product} onAddToCart={handleAddToCart} />
@@ -61,12 +61,14 @@ const ProductsPage = () => {
         )}
       </div>
       {authState.role === "student" && (
-      <div className="cart-section">
-        <CartList />
-      </div>
+        <div className="cart-section mt-6">
+          <CartList />
+        </div>
       )}
     </div>
-  );
+  </div>
+);
 };
 
 export default ProductsPage;
+
