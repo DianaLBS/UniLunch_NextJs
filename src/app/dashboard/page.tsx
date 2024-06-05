@@ -1,6 +1,7 @@
 "use client";
 import { useSession } from "next-auth/react";
 import React from "react";
+import Navbar from "@/components/NavBar";
 
 const Dashboard = () => {
   const { data: session, status } = useSession();
