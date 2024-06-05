@@ -2,7 +2,7 @@
 
 import React, { useEffect, useState } from "react";
 import { useAuth } from "../../../context/SessionAuthProvider";
-import ProductItem from "../../../components/ProductItem";
+import ProductItem from "../../../components/products/ProductItem";
 import { useProducts } from "../../../context/ProductContext";
 
 const ProductsPage = () => {

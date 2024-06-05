@@ -2,7 +2,7 @@
 
 import React, { useEffect } from "react";
 import { usePathname, useSearchParams, useRouter } from "next/navigation";
-import UpdateProductForm from "../../../../components/UpdateProductForm";
+import UpdateProductForm from "../../../../components/products/UpdateProductForm";
 import { useAuth } from "../../../../context/SessionAuthProvider"; // Ajusta la ruta según tu proyecto
 
 const UpdateProductPage = () => {

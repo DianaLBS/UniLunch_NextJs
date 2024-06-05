@@ -1,7 +1,7 @@
 "use client";
 import React from "react";
 import { useProducts } from "../context/ProductContext";
-import ProductItem from "./ProductItem";
+import ProductItem from "./products/ProductItem";
 
 const ProductList = () => {
   const { state } = useProducts();

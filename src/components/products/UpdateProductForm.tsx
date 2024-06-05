@@ -4,8 +4,8 @@ import React, { useEffect } from "react";
 import { useForm } from "react-hook-form";
 import { yupResolver } from "@hookform/resolvers/yup";
 import * as Yup from "yup";
-import { useAuth } from "../context/SessionAuthProvider"; // Ajusta la ruta según tu proyecto
-import { useProducts } from "../context/ProductContext";
+import { useAuth } from "../../context/SessionAuthProvider"; // Ajusta la ruta según tu proyecto
+import { useProducts } from "../../context/ProductContext";
 import { useRouter } from "next/navigation";
 
 const validationSchema = Yup.object().shape({

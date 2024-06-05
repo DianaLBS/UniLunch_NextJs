@@ -4,7 +4,7 @@ import "./globals.css";
 import "bootstrap/dist/css/bootstrap.min.css";
 import React from "react";
 import SessionAuthProvider from "../context/SessionAuthProvider";
-import Navbar from "../components/NavBar";
+import Navbar from "../components/ui/NavBar";
 import ProductProvider from "../context/ProductContext";
 
 const inter = Inter({ subsets: ["latin"] });
