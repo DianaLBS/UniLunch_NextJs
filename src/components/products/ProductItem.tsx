@@ -36,18 +36,21 @@ const ProductItem: React.FC<ProductItemProps> = ({ product, onAddToCart }) => {
   };
 
   return (
-    <div className="product-item bg-white rounded-lg shadow-md p-4 m-4">
-      <img src={product.image} alt={product.name} className="w-full h-48 object-cover rounded-md" />
-      <h2 className="text-xl font-semibold mt-4">{product.name}</h2>
-      <p className="text-gray-700 mt-2">{product.description}</p>
-      <p className="text-gray-900 font-bold mt-2">${product.price}</p>
-      <p className="text-gray-500 mt-2">Stock: {product.stock}</p>
-      <button 
-        onClick={handleAddToCart} 
-        className="bg-blue-500 text-white px-4 py-2 rounded-md mt-4 hover:bg-blue-600 transition-colors duration-300"
-      >
-        Añadir al Carrito
-      </button>
+    <div className="product-item">
+      <img src={product.image} alt={product.name} />
+      <h2>{product.name}</h2>
+      <p>{product.description}</p>
+      <p>${product.price}</p>
+      {authState.role === "student" && (
+        <>
+      <p>Stock: {product.stock}</p>
+      </>
+      )}
+      {authState.role === "student" && (
+        <>
+      <button onClick={handleAddToCart}>Agregar al carrito</button>
+      </>
+      )}
       {authState.role === "restaurant" && (
         <div className="flex space-x-2 mt-4">
           <Link href={`/products/edit/${product.id}`} passHref>
