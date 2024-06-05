@@ -4,16 +4,17 @@ import React from "react";
 import { useForm } from "react-hook-form";
 import { yupResolver } from "@hookform/resolvers/yup";
 import * as Yup from "yup";
+import { AiOutlineFileText, AiOutlineDollar, AiOutlineStock, AiOutlinePicture } from 'react-icons/ai';
 
 const validationSchema = Yup.object().shape({
-  name: Yup.string().required("Name is required"),
+  name: Yup.string().required("El nombre es obligatorio"),
   description: Yup.string()
-    .required("Description is required")
-    .min(10, "Description must be at least 10 characters")
-    .max(150, "Description must be less than 150 characters"),
-  price: Yup.number().required("Price is required").positive("Price must be positive"),
-  stock: Yup.number().required("Stock is required").positive("Stock must be positive"),
-  image: Yup.string().url("Invalid URL"),
+    .required("La descripción es obligatoria")
+    .min(10, "La descripción debe tener al menos 10 caracteres")
+    .max(150, "La descripción debe tener menos de 150 caracteres"),
+  price: Yup.number().required("El precio es obligatorio").positive("El precio debe ser positivo"),
+  stock: Yup.number().required("El stock es obligatorio").positive("El stock debe ser positivo"),
+  image: Yup.string().url("URL inválida"),
 });
 
 interface ProductFormProps {
@@ -50,28 +51,68 @@ const ProductForm: React.FC<ProductFormProps> = ({ initialData, onSubmit }) => {
   };
 
   return (
-    <form onSubmit={handleSubmit(handleFormSubmit)}>
-      <div>
-        <input type="text" placeholder="Name" {...register("name")} />
-        <p>{errors.name?.message}</p>
+    <form onSubmit={handleSubmit(handleFormSubmit)} className="max-w-4xl mx-auto bg-white p-8 shadow-md rounded-lg space-y-6">
+      <h2 className="text-2xl font-bold text-center mb-6">Agregar Producto</h2>
+      <div className="flex items-center space-x-4">
+        <AiOutlineFileText size={24} />
+        <input
+          type="text"
+          placeholder="Nombre"
+          {...register("name")}
+          className="w-full p-2 border border-gray-300 rounded-lg"
+        />
       </div>
-      <div>
-        <textarea placeholder="Description" {...register("description")} />
-        <p>{errors.description?.message}</p>
+      {errors.name && <p className="text-red-500 text-sm">{errors.name.message}</p>}
+      
+      <div className="flex items-center space-x-4">
+        <AiOutlineFileText size={24} />
+        <textarea
+          placeholder="Descripción"
+          {...register("description")}
+          className="w-full p-2 border border-gray-300 rounded-lg"
+        />
       </div>
-      <div>
-        <input type="number" placeholder="Price" {...register("price")} />
-        <p>{errors.price?.message}</p>
+      {errors.description && <p className="text-red-500 text-sm">{errors.description.message}</p>}
+
+      <div className="flex items-center space-x-4">
+        <AiOutlineDollar size={24} />
+        <input
+          type="number"
+          placeholder="Precio"
+          {...register("price")}
+          className="w-full p-2 border border-gray-300 rounded-lg"
+        />
       </div>
-      <div>
-        <input type="number" placeholder="Stock" {...register("stock")} />
-        <p>{errors.stock?.message}</p>
+      {errors.price && <p className="text-red-500 text-sm">{errors.price.message}</p>}
+
+      <div className="flex items-center space-x-4">
+        <AiOutlineStock size={24} />
+        <input
+          type="number"
+          placeholder="Stock"
+          {...register("stock")}
+          className="w-full p-2 border border-gray-300 rounded-lg"
+        />
       </div>
-      <div>
-        <input type="text" placeholder="Image URL" {...register("image")} />
-        <p>{errors.image?.message}</p>
+      {errors.stock && <p className="text-red-500 text-sm">{errors.stock.message}</p>}
+
+      <div className="flex items-center space-x-4">
+        <AiOutlinePicture size={24} />
+        <input
+          type="text"
+          placeholder="URL de la Imagen"
+          {...register("image")}
+          className="w-full p-2 border border-gray-300 rounded-lg"
+        />
       </div>
-      <button type="submit">Submit</button>
+      {errors.image && <p className="text-red-500 text-sm">{errors.image.message}</p>}
+
+      <button
+        type="submit"
+        className="w-full bg-blue-500 text-white p-3 rounded-lg hover:bg-blue-600 transition duration-200"
+      >
+        Agregar Producto
+      </button>
     </form>
   );
 };

@@ -3,6 +3,8 @@
 import React, { useState } from "react";
 import { useRouter } from "next/navigation";
 import ProductForm from "../../../components/products/ProductForm";
+import Sidebar from "../../../components/dashboard/Sidebar";
+import ProfileSection from "../../../components/dashboard/ProfileSection";
 import { useAuth } from "../../../context/SessionAuthProvider";
 
 const AddProductPage = () => {
@@ -60,10 +62,17 @@ const AddProductPage = () => {
   }
 
   return (
-    <div>
-      <h1>Add Product</h1>
-      <ProductForm onSubmit={handleSubmit} />
-      {error && <p>{error}</p>}
+    <div className="flex h-screen ">
+      <Sidebar role="restaurant" />
+      <div className="flex-1 flex flex-col bg-gray-100">
+        <div className="flex justify-end p-4">
+          <ProfileSection />
+        </div>
+        <div className="flex-1 flex items-center justify-center p-6">
+            <ProductForm onSubmit={handleSubmit} />
+            {error && <p className="text-red-500 text-center mt-4">{error}</p>}
+        </div>
+      </div>
     </div>
   );
 };

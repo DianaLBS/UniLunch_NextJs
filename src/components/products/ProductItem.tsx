@@ -14,11 +14,11 @@ const ProductItem: React.FC<ProductItemProps> = ({ product, onAddToCart }) => {
   const { state: authState } = useAuth();
   const { dispatch: productDispatch } = useProducts();
   const { dispatch } = useCart();
+  
   const handleAddToCart = () => {
     onAddToCart(product);
-    dispatch({type:"SHOW_CART"});
+    dispatch({ type: "SHOW_CART" });
   };
-  
 
   const handleDelete = async () => {
     const response = await fetch(`${process.env.NEXT_PUBLIC_BACKEND_URL}/products/${product.id}`, {
@@ -31,7 +31,7 @@ const ProductItem: React.FC<ProductItemProps> = ({ product, onAddToCart }) => {
     if (response.ok) {
       productDispatch({ type: "DELETE_PRODUCT", payload: product.id });
     } else {
-      console.error("Failed to delete product");
+      console.error("Error al eliminar el producto");
     }
   };
 
@@ -48,16 +48,23 @@ const ProductItem: React.FC<ProductItemProps> = ({ product, onAddToCart }) => {
       )}
       {authState.role === "student" && (
         <>
-      <button onClick={handleAddToCart}>Add to Cart</button>
+      <button onClick={handleAddToCart}>Agregar al carrito</button>
       </>
       )}
       {authState.role === "restaurant" && (
-        <>
+        <div className="flex space-x-2 mt-4">
           <Link href={`/products/edit/${product.id}`} passHref>
-            Edit
+            <a className="bg-yellow-500 text-white px-4 py-2 rounded-md hover:bg-yellow-600 transition-colors duration-300">
+              Editar
+            </a>
           </Link>
-          <button onClick={handleDelete}>Delete</button>
-        </>
+          <button 
+            onClick={handleDelete} 
+            className="bg-red-500 text-white px-4 py-2 rounded-md hover:bg-red-600 transition-colors duration-300"
+          >
+            Eliminar
+          </button>
+        </div>
       )}
     </div>
   );

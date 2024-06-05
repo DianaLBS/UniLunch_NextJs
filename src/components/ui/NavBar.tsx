@@ -18,11 +18,6 @@ const Navbar = () => {
             <Link href="/" className="text-white font-medium hover:text-blue-400 no-underline flex items-center">
                   <FaHome className="mr-1" /> Inicio
             </Link>
-            {session?.user && (
-            <Link href="/dashboard" className="text-white font-medium hover:text-blue-400 no-underline flex items-center">
-              <FaTachometerAlt className="mr-2"/> Panel
-            </Link>
-            )}
           </div>
           <div className="flex space-x-6 items-center">
 

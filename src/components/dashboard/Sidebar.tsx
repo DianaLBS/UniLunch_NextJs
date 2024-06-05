@@ -41,6 +41,9 @@ const Sidebar = ({ role }: { role: string }) => {
     { href: '/products', label: 'Productos', icon: <AiFillShopping />, subLinks: [
       { href: '/products/list', label: 'Ver Productos' },
       { href: '/products/add', label: 'Crear Producto' }
+    ]},
+    { href: '/announcements', label: 'Novedades', icon: <AiFillTags />, subLinks: [
+      { href: '/announcements/add', label: 'Crear Novedad' }
     ]}
   ];
 
