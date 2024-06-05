@@ -16,13 +16,11 @@ const ProductsPage = () => {
   useEffect(() => {
     const fetchProducts = async () => {
       try {
-        console.log("Fetching products...");
         const response = await fetch(`${process.env.NEXT_PUBLIC_BACKEND_URL}/products`);
         if (!response.ok) {
           throw new Error(`Error: ${response.statusText}`);
         }
         const data = await response.json();
-        console.log("Fetched products:", data);
         productDispatch({ type: "SET_PRODUCTS", payload: data });
       } catch (error) {
         console.error("Error fetching products:", error);
@@ -35,7 +33,6 @@ const ProductsPage = () => {
   }, [productDispatch]);
 
   const handleAddToCart = (product: { id: any; name: any; price: any; }) => {
-    console.log("Adding to cart:", product);
     cartDispatch({
       type: "ADD_TO_CART",
       payload: {
@@ -45,18 +42,16 @@ const ProductsPage = () => {
         quantity: 1,
       },
     });
-    console.log("Added to cart:", product);
   };
 
   if (loading) {
-    console.log("Loading products...");
-    return <p>Loading...</p>;
+    return <p>Cargando...</p>;
   }
 
   return (
-    <div className="products-page">
-      <h1>Products</h1>
-      <div className="products-list">
+    <div className="products-page p-4">
+      <h1 className="text-3xl font-bold mb-6">Products</h1>
+      <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-6">
         {productState.products.length === 0 ? (
           <p>No products found.</p>
         ) : (
@@ -65,9 +60,11 @@ const ProductsPage = () => {
           ))
         )}
       </div>
+      {authState.role === "student" && (
       <div className="cart-section">
         <CartList />
       </div>
+      )}
     </div>
   );
 };

@@ -66,29 +66,64 @@ const UpdateProductForm = ({ productId }: { productId: string }) => {
   };
 
   return (
-    <form onSubmit={handleSubmit(onSubmit)}>
-      <h2>Update Product</h2>
-      <div>
-        <input type="text" placeholder="Name" {...register("name")} />
-        <p>{errors.name?.message}</p>
+    <form onSubmit={handleSubmit(onSubmit)} className="max-w-4xl mx-auto bg-white p-8 shadow-md rounded-lg space-y-6">
+      <h2 className="text-2xl font-bold text-center mb-6">Update Product</h2>
+      
+      <div className="flex items-center space-x-4">
+        <input
+          type="text"
+          placeholder="Name"
+          {...register("name")}
+          className="w-full p-2 border border-gray-300 rounded-lg"
+        />
       </div>
-      <div>
-        <textarea placeholder="Description" {...register("description")} />
-        <p>{errors.description?.message}</p>
+      {errors.name && <p className="text-red-500 text-sm">{errors.name.message}</p>}
+      
+      <div className="flex items-center space-x-4">
+        <textarea
+          placeholder="Description"
+          {...register("description")}
+          className="w-full p-2 border border-gray-300 rounded-lg"
+        />
       </div>
-      <div>
-        <input type="number" placeholder="Price" {...register("price")} />
-        <p>{errors.price?.message}</p>
+      {errors.description && <p className="text-red-500 text-sm">{errors.description.message}</p>}
+
+      <div className="flex items-center space-x-4">
+        <input
+          type="number"
+          placeholder="Price"
+          {...register("price")}
+          className="w-full p-2 border border-gray-300 rounded-lg"
+        />
       </div>
-      <div>
-        <input type="number" placeholder="Stock" {...register("stock")} />
-        <p>{errors.stock?.message}</p>
+      {errors.price && <p className="text-red-500 text-sm">{errors.price.message}</p>}
+
+      <div className="flex items-center space-x-4">
+        <input
+          type="number"
+          placeholder="Stock"
+          {...register("stock")}
+          className="w-full p-2 border border-gray-300 rounded-lg"
+        />
       </div>
-      <div>
-        <input type="text" placeholder="Image URL" {...register("image")} />
-        <p>{errors.image?.message}</p>
+      {errors.stock && <p className="text-red-500 text-sm">{errors.stock.message}</p>}
+
+      <div className="flex items-center space-x-4">
+        <input
+          type="text"
+          placeholder="Image URL"
+          {...register("image")}
+          className="w-full p-2 border border-gray-300 rounded-lg"
+        />
       </div>
-      <button type="submit">Update Product</button>
+      {errors.image && <p className="text-red-500 text-sm">{errors.image.message}</p>}
+
+      <button
+        type="submit"
+        className="w-full bg-blue-500 text-white p-3 rounded-lg hover:bg-blue-600 transition duration-200"
+      >
+        Update Product
+      </button>
     </form>
   );
 };
