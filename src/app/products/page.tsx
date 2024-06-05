@@ -5,7 +5,10 @@ import Sidebar from '@/components/dashboard/Sidebar';
 import NavBar from '@/components/NavBar';
 import ProductForm from '@/components/products/ProductForm';
 import ProductList from '@/components/products/ProductList';
-import { ProductProvider, useProducts } from '@/context/ProductContext';
+import {useProducts } from '@/context/ProductContext';
+import ProductProvider from '@/context/ProductContext';
+import ProductItem from '@/components/products/ProductItem';
+
 
 const ProductPage = () => {
   const { state, dispatch } = useProducts();

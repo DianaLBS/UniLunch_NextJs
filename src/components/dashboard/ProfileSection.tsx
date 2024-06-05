@@ -1,3 +1,4 @@
+"use client";
 import React, { useState } from 'react';
 import { signOut } from 'next-auth/react';
 import { AiOutlineEdit, AiOutlineLogout, AiOutlineUser } from 'react-icons/ai';
