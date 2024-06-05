@@ -1,5 +1,5 @@
 import React from "react";
-import ButtonAuth from "../components/ButtonAuth";
+import ButtonAuth from "../components/ui/ButtonAuth";
 import Image from "next/image";
 import { FaUtensils, FaQrcode, FaUserFriends, FaMobileAlt } from "react-icons/fa";
 
